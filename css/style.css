@@ -1,0 +1,12 @@
+body {
+    padding-top: 2rem;
+}
+#login-section {
+    max-width: 420px;
+}
+#candidates-container .candidate-card {
+    cursor: pointer;
+}
+#vote-message {
+    font-weight: bold;
+}
