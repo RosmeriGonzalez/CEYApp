@@ -33,6 +33,7 @@
   const voteAlert     = el("vote-alert");
   const myVoteBox     = el("my-vote");
   const myVoteBody    = el("my-vote-body");
+  const loginForm     = el("login-form");
 
   // Admin gestione
   const formAddStudent = el("form-add-student");
@@ -201,6 +202,9 @@
       adminSection.classList.add("d-none");
       sessionPill.classList.add("d-none");
       btnLogout.classList.add("d-none");
+      loginForm.reset();
+      loginForm.classList.remove("was-validated");
+      clearAlert("login-alert");
       return;
     }
     // con sesión
@@ -266,7 +270,7 @@
       return;
     }
 
-    // Usuario normal: debe parecer correo y pass ∈ {1,2,3,4}
+    // Usuario normal: debe parecer correo y usar la contraseña por defecto
     const isEmail = user.includes("@") && userLower.indexOf("@") > 0 && userLower.split("@")[1].includes(".");
     const validPass = CFG.normalPasswords.includes(pass);
     if (isEmail && validPass) {

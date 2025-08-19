@@ -8,7 +8,7 @@ window.CEYAPP_CONFIG = {
   adminPass: "CEYAdmin2025",
   altUser: "Alternativo",
   altPass: "Alternativo2025",
-  normalPasswords: ["1", "2", "3", "4"],
+  normalPasswords: ["1234"],
 
   // Lista inicial (editable en runtime por el admin)
   defaultStudents: [
