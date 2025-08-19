@@ -1,12 +1,38 @@
+/* css/style.css */
+
 body {
-    padding-top: 2rem;
+  padding-top: 4.5rem; /* Navbar fija */
+  background: radial-gradient(1200px 600px at 10% -10%, #f2f7ff 0, transparent 50%) no-repeat,
+              radial-gradient(900px 500px at 110% 10%, #fff4f2 0, transparent 50%) no-repeat;
 }
-#login-section {
-    max-width: 420px;
+
+.logo-xl {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
 }
-#candidates-container .candidate-card {
-    cursor: pointer;
+
+.card {
+  border-radius: 1rem;
 }
-#vote-message {
-    font-weight: bold;
+
+.form-check-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25);
+}
+
+#students-container .student-card {
+  transition: transform .15s ease, box-shadow .15s ease;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+#students-container .student-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+}
+
+#my-vote .list-group-item {
+  border-radius: .75rem;
 }
