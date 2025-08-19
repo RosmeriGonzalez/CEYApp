@@ -13,8 +13,6 @@ const students = [
 
 const ADMIN_USER = 'CEYAdmin';
 const ADMIN_PASS = 'CEYAdmin2025';
-const ALT_USER = 'Alternativo';
-const ALT_PASS = 'Alternativo2025';
 const DEFAULT_PASS = '1234';
 
 let currentUser = '';
@@ -91,7 +89,8 @@ function resetResults() {
 }
 
 // Login handling
-document.getElementById('login-form').addEventListener('submit', e => {
+const loginForm = document.getElementById('login-form');
+loginForm.addEventListener('submit', e => {
     e.preventDefault();
     const user = document.getElementById('username').value.trim();
     const pass = document.getElementById('password').value.trim();
@@ -100,8 +99,6 @@ document.getElementById('login-form').addEventListener('submit', e => {
 
     if (user === ADMIN_USER && pass === ADMIN_PASS) {
         currentRole = 'admin';
-    } else if (user === ALT_USER && pass === ALT_PASS) {
-        currentRole = 'alternate';
     } else if (user.includes('@') && pass === DEFAULT_PASS) {
         currentRole = 'user';
     } else {
@@ -112,6 +109,11 @@ document.getElementById('login-form').addEventListener('submit', e => {
 
     document.getElementById('login-section').classList.add('d-none');
     document.getElementById('voting-section').classList.remove('d-none');
+
+    const msg = document.getElementById('vote-message');
+    msg.textContent = `Bienvenido, ${currentUser}.`;
+    msg.className = 'text-success';
+
     if (currentRole === 'admin') {
         document.getElementById('admin-section').classList.remove('d-none');
         updateResults();
@@ -119,12 +121,13 @@ document.getElementById('login-form').addEventListener('submit', e => {
 
     renderCandidates();
 
-    if (currentRole !== 'alternate') {
-        const votedUsers = loadVotedUsers();
-        if (votedUsers[currentUser]) {
-            document.getElementById('vote-message').textContent = 'Ya has votado.';
-            document.getElementById('submit-vote').disabled = true;
-        }
+    const votedUsers = loadVotedUsers();
+    if (votedUsers[currentUser]) {
+        msg.textContent = 'Ya has votado.';
+        msg.className = 'text-danger';
+        document.getElementById('submit-vote').disabled = true;
+    } else {
+        document.getElementById('submit-vote').disabled = false;
     }
 });
 
@@ -139,25 +142,20 @@ document.getElementById('submit-vote').addEventListener('click', () => {
         return;
     }
 
-    if (currentRole !== 'alternate') {
-        const votedUsers = loadVotedUsers();
-        if (votedUsers[currentUser]) {
-            msg.textContent = 'Ya has votado.';
-            msg.className = 'text-danger';
-            return;
-        }
+    const votedUsers = loadVotedUsers();
+    if (votedUsers[currentUser]) {
+        msg.textContent = 'Ya has votado.';
+        msg.className = 'text-danger';
+        return;
     }
 
     const votes = loadVotes();
     votes[selected.value] = (votes[selected.value] || 0) + 1;
     saveVotes(votes);
 
-    if (currentRole !== 'alternate') {
-        const votedUsers = loadVotedUsers();
-        votedUsers[currentUser] = selected.value;
-        saveVotedUsers(votedUsers);
-        document.getElementById('submit-vote').disabled = true;
-    }
+    votedUsers[currentUser] = selected.value;
+    saveVotedUsers(votedUsers);
+    document.getElementById('submit-vote').disabled = true;
 
     msg.textContent = '¡Gracias por tu voto!';
     msg.className = 'text-success';
