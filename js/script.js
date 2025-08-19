@@ -15,6 +15,7 @@ const ADMIN_USER = 'CEYAdmin';
 const ADMIN_PASS = 'CEYAdmin2025';
 const ALT_USER = 'Alternativo';
 const ALT_PASS = 'Alternativo2025';
+const DEFAULT_PASS = '1234';
 
 let currentUser = '';
 let currentRole = '';
@@ -101,7 +102,7 @@ document.getElementById('login-form').addEventListener('submit', e => {
         currentRole = 'admin';
     } else if (user === ALT_USER && pass === ALT_PASS) {
         currentRole = 'alternate';
-    } else if (user.includes('@')) {
+    } else if (user.includes('@') && pass === DEFAULT_PASS) {
         currentRole = 'user';
     } else {
         error.textContent = 'Credenciales inválidas';
@@ -162,6 +163,9 @@ document.getElementById('submit-vote').addEventListener('click', () => {
     msg.className = 'text-success';
     updateResults();
 });
+
+// Sync results across tabs/devices when storage changes
+window.addEventListener('storage', updateResults);
 
 const exportBtn = document.getElementById('export-results');
 if (exportBtn) {
